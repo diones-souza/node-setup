@@ -3,8 +3,10 @@ import { Routes } from "./routes"
 async function main() {
     const modules = new Routes()
     const app = await modules.handle()
+    const port = process.env.APP_PORT
+    console.log(process.env.DATABASE_URL)
 
-    app.listen(3333, () => console.log("Server is runnig on Port 3333"))
+    app.listen(port, () => console.log(`Server is runnig on Port ${port}`))
 }
 
 main()

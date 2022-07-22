@@ -1,35 +1,35 @@
 import { Request, Response } from "express"
-import { prismaClient } from "../../../../database/prismaClient"
 import { validationResult } from 'express-validator'
+import { UserService } from "../../services/userService"
+
+const userService = new UserService()
 
 export class UserController {
-    async create(request: Request, response: Response){
-        const { name , email } = request.body
-
-        const user = await prismaClient.user.create({
-            data:{
-                name,
-                email
-            }
+        
+    async getItem(request: Request, response: Response) {
+        userService.getItem(request)
+        .then((result)=>{
+            return response.json(result)
+        })
+        .catch((error)=>{
+            return response.json(error)
         })
         
-        return response.json(user)
     }
-    
-    async getItem(request: Request, response: Response) {
+
+    async create(request: Request, response: Response){
         const erros = validationResult(request)
         if(!erros.isEmpty()){
             return response.status(400).json({erros:erros.array()})
         }
-
-        const { id } = request.params
-
-        const users = await prismaClient.user.findFirst({
-            where:{
-                id: parseInt(id)
-            }
+        
+        userService.create(request)
+        .then((result)=>{
+            return response.json(result)
         })
-
-        return response.json(users)
+        .catch((error)=>{
+            return response.json(error)
+        })
     }
+
 }

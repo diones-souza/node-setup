@@ -1,12 +1,12 @@
 import { Router } from "express"
 import { UserController } from "../controllers/userController"
 
-const { userValidator } = require("../../validations/userValidator")
+const { createUserValidator } = require("../../validations/createUserValidator")
 const router = Router()
 
 const userController = new UserController()
 
-router.post("/user", userController.create)
-router.get("/user/:id", userValidator, userController.getItem)
+router.get("/user/:id", userController.getItem)
+router.post("/user", createUserValidator, userController.create)
 
 export { router }
