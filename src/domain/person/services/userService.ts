@@ -4,6 +4,16 @@ import { UserRepository } from "../repositories/userRepository"
 const userRepository = new UserRepository()
 export class UserService {
    	
+	async getItems(request: Request) {
+		const { name, email } = request.body
+		const where = {
+			name,
+			email
+		}
+
+		return userRepository.getItems(where)
+    }
+
 	async getItem(request: Request) {
 		const { id } = request.params
 		const where = {
