@@ -1,11 +1,23 @@
-import { Routes } from "./routes"
+import express from 'express'
+import { Routes } from './routes'
+import corsOptions from './config/cors'
+
+declare let require: any
+
+const cors = require('cors')
 
 async function main() {
-    const modules = new Routes()
-    const app = await modules.handle()
-    const port = process.env.APP_PORT
+  const app = express()
+  const modules = new Routes()
 
-    app.listen(port, () => console.log(`Server is runnig on Port ${port}`))
+  app.use(express.json())
+  app.use(cors(corsOptions))
+
+  await modules.handle(app)
+
+  const port = process.env.APP_PORT
+
+  app.listen(port, () => console.log(`Server is runnig on Port ${port}`))
 }
 
 main()
