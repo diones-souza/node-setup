@@ -1,13 +1,15 @@
 import { Request, Response } from 'express'
 import { validationResult } from 'express-validator'
-import { UserService } from '../../services/userService'
+import { UserService } from '../../services'
 
 const userService = new UserService()
 
 export class UserController {
   async getItems(request: Request, response: Response) {
+    const { name, username } = request.body
+
     userService
-      .getItems(request)
+      .getItems({ name, username })
       .then(result => {
         return response.json(result)
       })
@@ -17,8 +19,10 @@ export class UserController {
   }
 
   async getItem(request: Request, response: Response) {
+    const { id } = request.params
+
     userService
-      .getItem(request)
+      .getItem(parseInt(id, 10))
       .then(result => {
         return response.json(result)
       })
@@ -33,8 +37,10 @@ export class UserController {
       return response.status(400).json({ erros: erros.array() })
     }
 
+    const { name, username, password } = request.body
+
     userService
-      .create(request)
+      .create({ name, username, password })
       .then(result => {
         return response.json(result)
       })

@@ -11,28 +11,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model posts {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime
-  content   String?
-  published Boolean  @default(false)
-  authorId  Int
-  label     String   @db.VarChar(255)
-  users     users    @relation(fields: [authorId], references: [id])
-}
+model User {
+  id       String       @id @default(uuid())
+  name     String
+  username String       @unique
+  password String
 
-model profiles {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  userId Int     @unique
-  users  users   @relation(fields: [userId], references: [id])
-}
-
-model users {
-  id       Int       @id @default(autoincrement())
-  email    String    @unique
-  name     String?
-  posts    posts[]
-  profiles profiles?
+  @@map("users")
 }

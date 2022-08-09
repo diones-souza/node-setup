@@ -1,4 +1,5 @@
-import express from 'express'
+import 'express-async-errors'
+import express, { NextFunction, Request, Response } from 'express'
 import { Routes } from './routes'
 import corsOptions from './config/cors'
 
@@ -14,6 +15,20 @@ async function main() {
   app.use(cors(corsOptions))
 
   await modules.handle(app)
+
+  app.use(
+    (
+      error: Error,
+      request: Request,
+      response: Response,
+      next: NextFunction
+    ) => {
+      return response.json({
+        status: 'ERROR',
+        message: error.message
+      })
+    }
+  )
 
   const port = process.env.APP_PORT
 

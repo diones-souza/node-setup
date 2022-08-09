@@ -1,32 +1,46 @@
 import { Request } from 'express'
-import { UserRepository } from '../repositories/userRepository'
+import { UserRepository } from '../repositories'
+import { hash } from 'bcryptjs'
 
 const userRepository = new UserRepository()
+
+interface User {
+  name: string
+  username: string
+  password: string
+}
+
+interface Filter {
+  name: string
+  username: string
+}
+
 export class UserService {
-  async getItems(request: Request) {
-    const { name, email } = request.body
+  async getItems(filter: Filter) {
     const where = {
-      name,
-      email
+      ...filter
     }
 
     return userRepository.getItems(where)
   }
 
-  async getItem(request: Request) {
-    const { id } = request.params
+  async getItem(id: number) {
     const where = {
-      id: parseInt(id, 10)
+      id
     }
 
     return userRepository.getItem(where)
   }
 
-  async create(request: Request) {
-    const { name, email } = request.body
+  async create(user: User) {
+    const { name, username, password } = user
+
+    const passwordHash = await hash(password, 8)
+
     const data = {
       name,
-      email
+      username,
+      password: passwordHash
     }
 
     return userRepository.create(data)
