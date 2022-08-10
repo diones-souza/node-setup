@@ -6,7 +6,8 @@
    "scripts": {
       "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --no-notify server.ts",
       "start": "ts-node server.ts",
-      "lint": "tslint 'src/**/*.ts?(x)'"
+      "lint": "tslint 'src/**/*.ts?(x)'",
+      "key:generate": "ts-node-dev generateAppKey.ts"
    },
    "author": "Diones S Calca",
    "license": "MIT",
