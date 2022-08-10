@@ -1,7 +1,6 @@
 import { UserRepository } from '../../person/repositories'
 import { compare } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
-import { stringify } from 'querystring'
 
 const userRepository = new UserRepository()
 
