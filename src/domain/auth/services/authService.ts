@@ -12,7 +12,7 @@ interface Credential {
 
 export class AuthService {
   async signIn({ username, password }: Credential) {
-    const key = process.env.APP_KEY or
+    const key = process.env.APP_KEY
 
     const where = {
       username
@@ -30,7 +30,7 @@ export class AuthService {
       throw new Error('User or password incorrect!')
     }
 
-    const token = sign({}, key, {
+    const token = sign({}, String(key), {
       subject: user.id,
       expiresIn: '20s'
     })
