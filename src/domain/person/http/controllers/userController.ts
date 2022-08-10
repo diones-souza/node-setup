@@ -14,7 +14,10 @@ export class UserController {
         return response.json(result)
       })
       .catch(error => {
-        return response.json(error)
+        return response.json({
+          status: 'Error',
+          message: error.message
+        })
       })
   }
 
@@ -27,7 +30,10 @@ export class UserController {
         return response.json(result)
       })
       .catch(error => {
-        return response.json(error)
+        return response.json({
+          status: 'Error',
+          message: error.message
+        })
       })
   }
 
@@ -45,7 +51,10 @@ export class UserController {
         return response.json(result)
       })
       .catch(error => {
-        return response.json(error)
+        return response.json({
+          status: 'Error',
+          message: error.message
+        })
       })
   }
 }

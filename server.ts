@@ -21,10 +21,11 @@ async function main() {
       error: Error,
       request: Request,
       response: Response,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       next: NextFunction
     ) => {
-      return response.json({
-        status: 'ERROR',
+      return response.status(400).json({
+        status: 'Error',
         message: error.message
       })
     }
