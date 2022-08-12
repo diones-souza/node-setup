@@ -25,4 +25,25 @@ export class AuthController {
         })
       })
   }
+
+  async refreshToken(request: Request, response: Response) {
+    const erros = validationResult(request)
+    if (!erros.isEmpty()) {
+      return response.status(400).json({ erros: erros.array() })
+    }
+
+    const { id } = request.params
+
+    authService
+      .refreshToken(id)
+      .then(result => {
+        return response.json(result)
+      })
+      .catch(error => {
+        return response.json({
+          status: 'Error',
+          message: error.message
+        })
+      })
+  }
 }
