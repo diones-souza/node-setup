@@ -14,7 +14,7 @@ async function main() {
   app.use(express.json())
   app.use(cors(corsOptions))
 
-  await modules.handle(app)
+  await modules.execute(app)
 
   app.use(
     (
